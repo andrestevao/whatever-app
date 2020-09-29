@@ -7,7 +7,8 @@ module.exports = {
         filename: 'bundle.js'
     },
     module: {
-       rules: [{
+       rules: [
+        {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
@@ -23,7 +24,26 @@ module.exports = {
             }
 
         },
-       }] 
+       },
+           {
+               test: /\.css$/,
+               exclude: /node_modules/,
+               use: [
+                   'style-loader',
+                   'css-loader',
+                   {
+                       loader: 'postcss-loader',
+                       options: {
+                           ident: 'postcss',
+                           plugins: [
+                               require('tailwindcss'),
+                               require('autoprefixer')
+                           ]
+                       }
+                   }
+               ]
+           }
+       ] 
     },
     devtool: 'cheap-module-eval-source-map',
     devServer: {
